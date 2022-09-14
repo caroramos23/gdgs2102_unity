@@ -1,0 +1,66 @@
+<h1 mat-dialog-title>{{ data?.title }}</h1>
+<mat-dialog-content>
+    <form [formGroup]="fundacionForm" (submit)="onSave()">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombre de Fundación</mat-label>
+            <input type="text" formControlName="nombreFundacion" matInput />
+            <mat-error>
+                {{ baseForm.getErrorMessage(fundacionForm.get('nombreFundacion')) }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input type="text" formControlName="descripcion" matInput />
+            <mat-error>
+                {{ baseForm.getErrorMessage(fundacionForm.get('descripcion')) }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Tipo de Fundación</mat-label>
+            <input type="text" formControlName="tipoFundacion" matInput />
+            <mat-error>
+                {{ baseForm.getErrorMessage(fundacionForm.get('tipoFundacion')) }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Fecha Fundación</mat-label>
+            <input type="text" formControlName="fechaFundacion" matInput />
+            <mat-error>
+                {{ baseForm.getErrorMessage(fundacionForm.get('fechaFundacion')) }}
+            </mat-error>
+        </mat-form-field>
+
+        <!--<mat-form-field class="full-width" appearance="outline">
+            <mat-label>Rol</mat-label>
+            <mat-select formControlName="rol">
+                <mat-option *ngFor="let rol of roles" [value]="rol.cveRol">
+                    {{ rol.nombre }}
+                </mat-option>
+            </mat-select>
+            <mat-error>
+                {{ baseForm.getErrorMessage(userForm.get('rol')) }}
+            </mat-error>
+        </mat-form-field>-->
+
+        <div align="center">
+            <button mat-flat-button color="primary" [disabled]="fundacionForm.invalid">
+                <mat-icon>save</mat-icon>
+                {{ titleButton }}
+            </button>
+            <button mat-flat-button color="warn" (click)="onClean()">
+                <mat-icon>clear</mat-icon>
+                Limpiar
+            </button>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+        Cerrar
+    </button>
+</mat-dialog-actions>
