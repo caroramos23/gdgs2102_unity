@@ -23,7 +23,7 @@ export class AuthService {
     private utilsSvc: UtilsService) {
       this.checkToken();
     }
-
+    
     get token$(): Observable<string> {
       return this.token.asObservable();
     }
@@ -60,6 +60,11 @@ export class AuthService {
         this.token.next(token);
       }
     }
+  }
+
+  getToken(){
+    return localStorage.getItem("token");
+
   }
 
   saveLocalStorage(token: string) {

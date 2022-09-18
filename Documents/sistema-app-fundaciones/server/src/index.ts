@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes';
 import usuarioRoutes from './routes/usuarioRoutes';
 import registroRoutes from './routes/registroRoutes';
 import fundacionRoutes from './routes/fundacionRoutes';
+import tipoRoutes from './routes/tipoRoutes';
 
 class Server {
     public app: Application;
@@ -35,6 +36,7 @@ class Server {
         this.app.use("/api/users", usuarioRoutes);
         this.app.use("/api/registros", registroRoutes);
         this.app.use("/api/fundaciones", fundacionRoutes);
+        this.app.use("/api/fundaciones_tipos", tipoRoutes);
     }
 
     start(): void {

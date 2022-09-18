@@ -5,6 +5,7 @@ import { BaseForm } from '@app/shared/utils/base-form';
 import { Subject, takeUntil } from 'rxjs';
 import { FundacionesService } from '../../services/fundaciones.service';
 import { FundacionResponse } from '@shared/models/fundacion.interface';
+import { TipoResponse } from '@app/shared/models/tipo.interface';
 
 enum Action {
   EDIT = 'edit',
@@ -21,14 +22,14 @@ export class FundacionDialogComponent implements OnInit, OnDestroy {
   actionTODO = Action.NEW;
   titleButton = "Guardar";
   private destroy$ = new Subject<any>();
-  //roles: RolResponse[] = [];
+  tipos: TipoResponse[] = [];
   fundacionForm = this.fb.group({
-    cveFundacion: [''],
+    cveFundacion: [],
     nombreFundacion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
     descripcion: ['', [Validators.required, Validators.minLength(3),Validators.maxLength(500)]],
     tipoFundacion: ['', [Validators.required, Validators.minLength(1)]],
     fechaFundacion:  ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]],
-    cveRegistro:  ['', [Validators.required]]
+    cveRegistro: []
   });
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<FundacionDialogComponent>, 
@@ -39,7 +40,12 @@ export class FundacionDialogComponent implements OnInit, OnDestroy {
               
 
   ngOnInit(): void {
+    this.fundacionesSvc.getTipos()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe( (tipos: TipoResponse[]) => {
+      this.tipos = tipos;
       this.patchData();
+    });
   }
 
   ngOnDestroy(): void {
@@ -75,6 +81,7 @@ export class FundacionDialogComponent implements OnInit, OnDestroy {
     }  else { // se actualizan los datos
 
       var updatedFundacion: FundacionResponse = {
+        cveFundacion: formvalue.cveFundacion!,
         nombreFundacion: formvalue.nombreFundacion!,
         descripcion: formvalue.descripcion!,
         tipoFundacion: formvalue.tipoFundacion!,
@@ -99,9 +106,10 @@ export class FundacionDialogComponent implements OnInit, OnDestroy {
         nombreFundacion: this.data?.fundacion.nombreFundacion,
         descripcion: this.data?.fundacion.descripcion,
         tipoFundacion: this.data?.fundacion.tipoFundacion,
-        fechaFundacion: this.data?.fundacion.fechaFundacion
+        fechaFundacion: this.data?.fundacion.fechaFundacion,
+        cveRegistro: this.data?.fundacion.cveRegistro
       });
-      //this.fundacionForm.get("")?.disable();
+      //this.fundacionForm.get("registro")?.disable();
     
       this.fundacionForm.updateValueAndValidity();
     } else {

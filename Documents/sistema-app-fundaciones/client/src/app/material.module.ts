@@ -14,6 +14,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table'; 
 import { MatPaginatorModule } from '@angular/material/paginator'; 
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import {MatNativeDateModule} from '@angular/material/core';
 
 const myModules: any = [
     MatButtonModule,
@@ -30,7 +32,9 @@ const myModules: any = [
     MatExpansionModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMomentDateModule,
+    MatNativeDateModule
 ];
 
 @NgModule({

@@ -23,6 +23,14 @@ class UsuarioDAO {
             return result;
         });
     }
+    consultaExiste(username) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query(" SELECT cveUsuario FROM tbl_usuario WHERE username like ?", [username]);
+            }));
+            return result;
+        });
+    }
     insertar(usuario) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {

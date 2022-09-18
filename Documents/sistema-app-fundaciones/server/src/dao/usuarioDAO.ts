@@ -11,6 +11,15 @@ class UsuarioDAO {
         return result;
     }
 
+    public async consultaExiste(username: string) {
+        const result = await pool.then( async (connection) => {
+            return await connection.query(
+                " SELECT cveUsuario FROM tbl_usuario WHERE username like ?", [username]);
+        });
+        return result;
+    }
+
+
     public async insertar(usuario: any) {
         const result = await pool.then( async (connection) => {
             return await connection.query(

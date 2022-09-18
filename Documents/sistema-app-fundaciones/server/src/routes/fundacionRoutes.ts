@@ -13,9 +13,9 @@ class FundacionRoutes {
 
     private config() {
         // listado
-        this.router.get('/', fundacionController.listar);
+        this.router.get('/:token', fundacionController.listar);
         // insercion
-        this.router.post('/', fundacionController.insertar);
+        this.router.post('/:token', fundacionController.insertar);
         // actualizar
         this.router.put('/', fundacionController.actualizar);
         // eliminar

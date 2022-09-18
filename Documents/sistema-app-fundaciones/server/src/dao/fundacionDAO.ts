@@ -5,8 +5,9 @@ class FundacionDAO {
     public async listar(cveUsuario: number) {
         const result = await pool.then( async (connection) => {
             return await connection.query(
-                " SELECT cveFundacion, nombreFundacion, descripcion, tipoFundacion, fechaFundacion, cveRegistro "
-                + " FROM tbl_fundacion "+
+                "SELECT f.cveFundacion, f.nombreFundacion, f.descripcion, f.tipoFundacion, date_format(f.fechaFundacion, '%Y-%m-%d') as fechaFundacion,  concat_ws(' ', u.nombre, u.apellidos) as registro, u.cveUsuario as cveRegistro "+
+                "FROM tbl_fundacion f "+
+                "JOIN tbl_usuario u on f.cveRegistro = u.cveUsuario "+
                 "WHERE cveRegistro = ?", [cveUsuario]);
         });
         return result;

@@ -10,6 +10,7 @@ const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const usuarioRoutes_1 = __importDefault(require("./routes/usuarioRoutes"));
 const registroRoutes_1 = __importDefault(require("./routes/registroRoutes"));
 const fundacionRoutes_1 = __importDefault(require("./routes/fundacionRoutes"));
+const tipoRoutes_1 = __importDefault(require("./routes/tipoRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -32,6 +33,7 @@ class Server {
         this.app.use("/api/users", usuarioRoutes_1.default);
         this.app.use("/api/registros", registroRoutes_1.default);
         this.app.use("/api/fundaciones", fundacionRoutes_1.default);
+        this.app.use("/api/fundaciones_tipos", tipoRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get("port"), () => {

@@ -60,23 +60,31 @@ class UsuarioController {
                     || validator_1.default.isEmpty(usuario.password.trim())) {
                     return res.status(404).json({ message: "Todos los datos son requeridos", code: 1 });
                 }
-                // encriptar nuestra contraseña
-                var encryptedText = crypto_js_1.default.AES.encrypt(usuario.password, keySecret_1.default.keys.secret).toString();
-                usuario.password = encryptedText;
-                const newUser = {
-                    nombre: usuario.nombre.trim(),
-                    apellidos: usuario.apellidos.trim(),
-                    username: usuario.username.trim(),
-                    password: usuario.password.trim()
-                };
-                console.log(newUser);
-                // inserción de los datos
-                const result = yield usuarioDAO_1.default.insertar(newUser);
-                if (result.affectedRows > 0) {
-                    return res.json({ message: "Los datos se guardaron correctamente", code: 0 });
+                //Valida que el usuario no exista
+                const existeUser = yield usuarioDAO_1.default.consultaExiste(usuario.username);
+                console.log(existeUser);
+                if (existeUser.length >= 1) {
+                    return res.status(404).json({ message: "El username ya existe, elija otro", code: 1 });
                 }
                 else {
-                    return res.status(404).json({ message: result.message, code: 1 });
+                    // encriptar nuestra contraseña
+                    var encryptedText = crypto_js_1.default.AES.encrypt(usuario.password, keySecret_1.default.keys.secret).toString();
+                    usuario.password = encryptedText;
+                    const newUser = {
+                        nombre: usuario.nombre.trim(),
+                        apellidos: usuario.apellidos.trim(),
+                        username: usuario.username.trim(),
+                        password: usuario.password.trim()
+                    };
+                    console.log(newUser);
+                    // inserción de los datos
+                    const result = yield usuarioDAO_1.default.insertar(newUser);
+                    if (result.affectedRows > 0) {
+                        return res.json({ message: "Los datos se guardaron correctamente", code: 0 });
+                    }
+                    else {
+                        return res.status(404).json({ message: result.message, code: 1 });
+                    }
                 }
             }
             catch (error) {

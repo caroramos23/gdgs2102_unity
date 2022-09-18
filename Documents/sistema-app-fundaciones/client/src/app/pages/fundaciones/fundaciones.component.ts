@@ -9,8 +9,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { FundacionDialogComponent } from './components/fundacion-dialog/fundacion-dialog.component';
 import { FundacionesService } from './services/fundaciones.service';
 import Swal from 'sweetalert2';
+
 import { AuthService } from '../auth/services/auth.service';
-import { UserDialogComponent } from '../users/components/user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-fundaciones',
@@ -28,8 +28,6 @@ export class FundacionesComponent implements OnInit, AfterViewInit, OnDestroy {
     private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-
-
     this.listar();
   }
 

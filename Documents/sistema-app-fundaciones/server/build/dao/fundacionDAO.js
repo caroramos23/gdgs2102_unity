@@ -17,8 +17,9 @@ class FundacionDAO {
     listar(cveUsuario) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                return yield connection.query(" SELECT cveFundacion, nombreFundacion, descripcion, tipoFundacion, fechaFundacion, cveRegistro "
-                    + " FROM tbl_fundacion " +
+                return yield connection.query("SELECT f.cveFundacion, f.nombreFundacion, f.descripcion, f.tipoFundacion, date_format(f.fechaFundacion, '%Y-%m-%d') as fechaFundacion,  concat_ws(' ', u.nombre, u.apellidos) as registro, u.cveUsuario as cveRegistro " +
+                    "FROM tbl_fundacion f " +
+                    "JOIN tbl_usuario u on f.cveRegistro = u.cveUsuario " +
                     "WHERE cveRegistro = ?", [cveUsuario]);
             }));
             return result;

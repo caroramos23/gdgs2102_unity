@@ -50,27 +50,35 @@ class UsuarioController {
                     return res.status(404).json({ message: "Todos los datos son requeridos", code: 1});
             }
 
-            // encriptar nuestra contraseña
-            var encryptedText = criptjs.AES.encrypt(usuario.password, keySecret.keys.secret).toString();
-            usuario.password = encryptedText;
-
-            
-            const newUser = {
-                nombre: usuario.nombre.trim(),
-                apellidos: usuario.apellidos.trim(),
-                username: usuario.username.trim(),
-                password: usuario.password.trim()
-            }
-
-            console.log(newUser);
-
-            // inserción de los datos
-            const result = await dao.insertar(newUser);
-
-            if (result.affectedRows > 0) {
-                return res.json({message: "Los datos se guardaron correctamente", code: 0});
+            //Valida que el usuario no exista
+            const existeUser = await dao.consultaExiste(usuario.username);
+            console.log(existeUser);
+            if(existeUser.length >= 1){
+                return res.status(404).json({ message: "El username ya existe, elija otro", code: 1});
             } else {
-                return res.status(404).json({ message: result.message, code: 1});
+
+                // encriptar nuestra contraseña
+                var encryptedText = criptjs.AES.encrypt(usuario.password, keySecret.keys.secret).toString();
+                usuario.password = encryptedText;
+
+                
+                const newUser = {
+                    nombre: usuario.nombre.trim(),
+                    apellidos: usuario.apellidos.trim(),
+                    username: usuario.username.trim(),
+                    password: usuario.password.trim()
+                }
+
+                console.log(newUser);
+
+                // inserción de los datos
+                const result = await dao.insertar(newUser);
+
+                if (result.affectedRows > 0) {
+                    return res.json({message: "Los datos se guardaron correctamente", code: 0});
+                } else {
+                    return res.status(404).json({ message: result.message, code: 1});
+                }
             }
 
         } catch (error: any) {

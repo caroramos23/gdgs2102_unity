@@ -11,39 +11,55 @@
 
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Descripción</mat-label>
-            <input type="text" formControlName="descripcion" matInput />
+            <textarea formControlName="descripcion" matInput ></textarea>
             <mat-error>
                 {{ baseForm.getErrorMessage(fundacionForm.get('descripcion')) }}
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="full-width" appearance="outline">
+        <!--<mat-form-field class="full-width" appearance="outline">
             <mat-label>Tipo de Fundación</mat-label>
             <input type="text" formControlName="tipoFundacion" matInput />
             <mat-error>
                 {{ baseForm.getErrorMessage(fundacionForm.get('tipoFundacion')) }}
             </mat-error>
-        </mat-form-field>
+        </mat-form-field>-->
 
         <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Tipo de fundación</mat-label>
+            <mat-select formControlName="tipoFundacion">
+                <mat-option *ngFor="let tipo of tipos" [value]="tipo.cveTipo">
+                    {{ tipo.tipoFundacion }}
+                </mat-option>
+            </mat-select>
+            <mat-error>
+                {{ baseForm.getErrorMessage(fundacionForm.get('tipoFundacion')) }}
+            </mat-error>
+        </mat-form-field>
+
+
+        <!--<mat-form-field class="full-width" appearance="outline">
             <mat-label>Fecha Fundación</mat-label>
             <input type="text" formControlName="fechaFundacion" matInput />
             <mat-error>
                 {{ baseForm.getErrorMessage(fundacionForm.get('fechaFundacion')) }}
             </mat-error>
-        </mat-form-field>
-
-        <!--<mat-form-field class="full-width" appearance="outline">
-            <mat-label>Rol</mat-label>
-            <mat-select formControlName="rol">
-                <mat-option *ngFor="let rol of roles" [value]="rol.cveRol">
-                    {{ rol.nombre }}
-                </mat-option>
-            </mat-select>
-            <mat-error>
-                {{ baseForm.getErrorMessage(userForm.get('rol')) }}
-            </mat-error>
         </mat-form-field>-->
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Fecha Fundación</mat-label>
+            <input formControlName="fechaFundacion" [matDatepicker]="picker" matInput>
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>
+                {{ baseForm.getErrorMessage(fundacionForm.get('tipoFundacion')) }}
+            </mat-error>
+        </mat-form-field>
+        
+        
+        <input type="number" formControlName="cveRegistro" matInput hidden="true"/>
+
 
         <div align="center">
             <button mat-flat-button color="primary" [disabled]="fundacionForm.invalid">
